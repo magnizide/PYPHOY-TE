@@ -8,6 +8,8 @@ name = "pypi"
 [dev-packages]
 python-telegram-bot = "==21.0.1"
 python-dotenv = "==1.0.1"
+requests = "==2.31.0"
+beautifulsoup4 = "==4.12.3"
 
 [requires]
 python_version = "3.12"

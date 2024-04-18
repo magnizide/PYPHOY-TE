@@ -1,0 +1,44 @@
+{
+    "categories": [
+        {
+            "text": "Carga más de 20 años de edad",
+            "id": 1,
+            "path": "/carga-mas-de-20-anos-de-edad"
+        },
+        {
+            "path": "/carga-peso-max-superior-a-3500kg",
+            "text": "Carga peso máx. superior a 3.500kg",
+            "id": 2
+        },
+        {
+            "path": "/carga-peso-max-superior-a-8500kg",
+            "text": "Carga peso máx. superior a 8.500kg",
+            "id": 3
+        },
+        {
+            "path": "/motos",
+            "text": "Motos",
+            "id": 4
+        },
+        {
+            "path": "/particulares",
+            "text": "Particulares",
+            "id": 5
+        },
+        {
+            "path": "/servicio-de-transporte-especial",
+            "text": "Servicio de Transporte Especial",
+            "id": 6
+        },
+        {
+            "path": "/taxis",
+            "text": "Taxis",
+            "id": 7
+        },
+        {
+            "path": "/transporte-publico-colectivo",
+            "text": "Transporte Público Colectivo",
+            "id": 8
+        }
+    ]
+}
