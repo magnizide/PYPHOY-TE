@@ -1,7 +1,11 @@
 import logging, sys, os, json
-from re import compile
 import requests, dotenv
 from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
 
 PYPHOY_URL = 'https://www.pyphoy.com'
 
@@ -39,12 +43,19 @@ def get_categories_in_use(cg_map, city_page:BeautifulSoup):
     return [c for c in cg_map if cg_map[c]['path'] in _cities_text]
     
 
-def get_pyp_info(pyp_page:BeautifulSoup):
-    card = pyp_page.find("div", {"class": "sc-77fa22c1-0 cPRBMS sc-bd02118d-0 izfnOD sc-9e56e907-9 joSnLR"})
-    nums_pyp = card.find("div", {"class": "sc-4e15c505-0 juuwzm sc-9e56e907-2 jGMtpa"}).text
-    info_pyp = card.find_all("ul", {"class": "sc-f11b3054-3 kvXdBF"})
-    print(info_pyp)
-    return 
+def get_pyp_info(url):
+    '''
+    TODO
+    '''
+    options = Options()
+    options.add_argument('--headless=new') 
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    driver.get(url)
+    plate_nums_info = driver.find_element(By.XPATH, '//*[@id="__next"]/div/div[3]/main/article/div[1]/div[1]/div/div/div[2]').text
+    banned_times = [e.text for e in driver.find_elements(By.CSS_SELECTOR, 'div.gtAiTL')]
+    
+    driver.close()
+    return {'plate_num': plate_nums_info, 'banned_times': banned_times}
 
 def url_builder(*args) -> str:
     '''
@@ -56,6 +67,9 @@ def url_builder(*args) -> str:
     return ( base_result + date_path if date_path else base_result )
 
 def request_pyp_page(pyp_url:str):
+    '''
+    TODO
+    '''
     try:
         req = requests.get(pyp_url).content
     except requests.exceptions.ConnectionError as e:
@@ -68,13 +82,14 @@ def request_pyp_page(pyp_url:str):
 
 
 def main() -> None:
-    parameters = (PYPHOY_URL,'/cali','/particulares', '/2024-04-19')
+    parameters = (PYPHOY_URL,'/bogota','/particulares', '/2024-04-19')
 
     # bs_homepage = request_pyp_page(PYPHOY_URL)
     req_pyp_url = url_builder(*parameters)
     bs_pyp_req_pyp_url = request_pyp_page(req_pyp_url)
     #categories_map = load_categories_map()
-    get_pyp_info(bs_pyp_req_pyp_url)
+    print(get_pyp_info(req_pyp_url))
+    
 
 if __name__ == "__main__":
     main()
