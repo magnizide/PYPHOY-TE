@@ -1,5 +1,5 @@
 import logging, sys, os, json, re
-import requests, dotenv
+import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -8,10 +8,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 
 PYPHOY_URL = 'https://www.pyphoy.com'
-
-# Dotenv load
-dotenv_path = os.path.join(os.path.dirname(__file__), '../.env')
-dotenv.load_dotenv(dotenv_path)
 
 # Select source of categories
 

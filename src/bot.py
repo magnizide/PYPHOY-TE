@@ -8,8 +8,7 @@ TODO
 
 import logging
 from datetime import datetime, timedelta
-from os import environ, path as os_path
-from dotenv import load_dotenv
+from os import environ
 
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 from telegram.ext import (
@@ -21,7 +20,7 @@ from telegram.ext import (
     filters,
 )
 
-import Scraper
+import scraper
 
 # Enable logging
 logging.basicConfig(
@@ -32,15 +31,11 @@ logging.getLogger("httpx").setLevel(logging.WARNING)
 
 logger = logging.getLogger(__name__)
 
-# Dotenv load
-dotenv_path = os_path.join(os_path.dirname(__file__), '../.env')
-load_dotenv(dotenv_path)
-
 CITY, CATEGORY, RESULT = range(3)
 
-CM = Scraper.load_categories_map()
+CM = scraper.load_categories_map()
 
-rep_cities = Scraper.get_cities()
+rep_cities = scraper.get_cities()
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -65,9 +60,9 @@ async def city(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     city = update.message.text
     context.user_data['city'] = rep_cities[city]
     logger.info("Chosen city %s", city)
-    categories_in_use_url = Scraper.url_builder(Scraper.PYPHOY_URL, rep_cities[city], '', '')
-    logger.info(Scraper.get_categories_in_use(CM, categories_in_use_url))
-    reply_keyboard = [[CM[cat]['text']] for cat in CM if cat in Scraper.get_categories_in_use(CM, categories_in_use_url)]
+    categories_in_use_url = scraper.url_builder(scraper.PYPHOY_URL, rep_cities[city], '', '')
+    logger.info(scraper.get_categories_in_use(CM, categories_in_use_url))
+    reply_keyboard = [[CM[cat]['text']] for cat in CM if cat in scraper.get_categories_in_use(CM, categories_in_use_url)]
     
     await update.message.reply_text(
         "Elige una categoria de pico y placa: ",
@@ -87,7 +82,7 @@ async def category(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data['category'] = choose_v_id_cm[category]
     context.user_data['date'] = date.date().__str__()
     data = context.user_data
-    result = Scraper.get_pyp_info(Scraper.url_builder(Scraper.PYPHOY_URL, data['city'], CM[data['category']]['path'], ""))
+    result = scraper.get_pyp_info(scraper.url_builder(scraper.PYPHOY_URL, data['city'], CM[data['category']]['path'], ""))
     data['info'] = result
     logger.info(data)
     
