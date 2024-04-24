@@ -1,34 +1,50 @@
 {
     "0": {
-        "text": "Carga más de 20 años de edad",
-        "path": "/carga-mas-de-20-anos-de-edad"
+        "path": "/particulares",
+        "text": "Particulares",
+        "emoji": "🚗",
+        "image_url": "https://caldasmotorpereira.com//wp-content/uploads/2019/01/banner-interno-17.jpg"
     },
     "1": {
-        "path": "/carga-peso-max-superior-a-3500kg",
-        "text": "Carga peso máx. superior a 3.500kg"
+        "path": "/taxis",
+        "text": "Taxis",
+        "emoji": "🚕",
+        "image_url": "https://www.shutterstock.com/image-vector/taxi-service-vector-banner-poster-260nw-1470629312.jpg"
     },
     "2": {
-        "path": "/carga-peso-max-superior-a-8500kg",
-        "text": "Carga peso máx. superior a 8.500kg"
+        "path": "/motos",
+        "text": "Motos",
+        "emoji": "🏍️",
+        "image_url": "https://www.ferbelpowersports.com/static/agency-go-virtual/Suzuki-Motos/Ciudad/GIXXER_250_ABS/2023/BANNER-250-mOVIL.jpg"
     },
     "3": {
-        "path": "/motos",
-        "text": "Motos"
+        "path": "/servicio-de-transporte-especial",
+        "text": "Servicio de Transporte Especial",
+        "emoji": "🚌",
+        "image_url": "https://evolutionrentacar.com/wp-content/uploads/Alquiler-de-camioneta-en-Medellin-Rionegro-y-Cartagena.jpg"
     },
     "4": {
-        "path": "/particulares",
-        "text": "Particulares"
+        "path": "/transporte-publico-colectivo",
+        "text": "Transporte Público Colectivo",
+        "emoji": "🚐",
+        "image_url": "https://www.busesycamioneschevrolet.com.co/wp-content/uploads/2017/11/Banner-2.jpg"
     },
     "5": {
-        "path": "/servicio-de-transporte-especial",
-        "text": "Servicio de Transporte Especial"
+        "path": "/carga-peso-max-superior-a-8500kg",
+        "text": "Carga peso máx. superior a 8.500kg",
+        "emoji": "🚘",
+        "image_url": "https://freightliner.com.co/img/assets/productos/114sd-tracto/banner_114.jpg"
     },
     "6": {
-        "path": "/taxis",
-        "text": "Taxis"
+        "path": "/carga-peso-max-superior-a-3500kg",
+        "text": "Carga peso máx. superior a 3.500kg",
+        "emoji": "🚛",
+        "image_url": "https://img.freepik.com/foto-gratis/imagen-camion-blanco-realista-sobre-fondo-blanco_125540-4543.jpg"
     },
     "7": {
-        "path": "/transporte-publico-colectivo",
-        "text": "Transporte Público Colectivo"
+        "text": "Carga más de 20 años de edad",
+        "path": "/carga-mas-de-20-anos-de-edad",
+        "emoji": "🚙",
+        "image_url": "https://www.carrosyclasicos.com/media/k2/items/cache/a758947fd48f09c08bb790ee223ce65f_XL.jpg"
     }
 }
