@@ -1,1 +1,1 @@
-# PYPHOY Telegram Enhanced (PYPHOY-TH) version
+# PYPHOY Telegram Enhanced (PYPHOY-TE) version
