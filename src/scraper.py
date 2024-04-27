@@ -2,9 +2,10 @@ import logging, sys, os, json, re
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chromium.options import ChromiumOptions
+from selenium.webdriver.chrome.service import Service as ChromiumService
 from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.core.os_manager import ChromeType
 from selenium.webdriver.common.by import By
 
 PYPHOY_URL = 'https://www.pyphoy.com'
@@ -45,9 +46,12 @@ def get_pyp_info(url):
     '''
     TODO
     '''
-    options = Options()
-    options.add_argument('--headless=new') 
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    options = ChromiumOptions()
+    options.add_argument('--headless')
+    options.add_argument("--disable-extensions")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--no-sandbox")
+    driver = webdriver.Chrome(service=ChromiumService(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()), options=options)
     driver.get(url)
     plate_nums_info = driver.find_element(By.XPATH, '//*[@id="__next"]/div/div[3]/main/article/div[1]/div[1]/div/div/div[2]').text
     

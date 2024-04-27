@@ -1,16 +1,15 @@
-ARG IMAGE_VERSION=3.12
+# Build for AMD64
+ARG IMAGE_VERSION=3.12-alpine
 FROM python:${IMAGE_VERSION}
 
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-    sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' && \
-    apt-get update && apt-get -y install google-chrome-stable && \
-    pip install pipenv && \
-    useradd -ms /bin/bash pyphoy
+ARG APP_DIR=/opt/app
+COPY --chown=pyphoy:pyphoy . ${APP_DIR}
+RUN apk add --no-cache chromium gcompat && \
+    pip install --no-cache-dir -r ${APP_DIR}/src/requirements.txt && \
+    adduser -Ds /bin/bash pyphoy
 
 USER pyphoy
-COPY . /opt/app
-WORKDIR /opt/app
 
-RUN pipenv install
+WORKDIR ${APP_DIR}
 
-ENTRYPOINT [ "pipenv", "run", "python", "src/bot.py" ]
+ENTRYPOINT [ "python", "src/bot.py" ]
