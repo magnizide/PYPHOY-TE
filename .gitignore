@@ -1,4 +1,4 @@
 .venv
 .env
-chromedriver.exe
+chromedriver*
 **/requirements.txt
