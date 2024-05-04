@@ -21,12 +21,12 @@ PYPHOY_URL = 'https://www.pyphoy.com'
 
 # Select source of categories
 
-def load_categories_map():
+def load_categories_map(relative_path:str):
     '''
     Loads json file into memory to parse and map categories and other assests to display.
     '''
-    categories_file = (os.path.join(os.path.dirname(__file__), 'assets/categories.json') if os.environ.get("PYPHOY_TH") == 'dev' else 'PROD_STRING')
-    with open(categories_file, "r") as cat_file:
+    categories_file = os.path.join(os.path.dirname(__file__), relative_path)
+    with open(categories_file, "r", encoding="utf8") as cat_file:
         categories_map = json.load(cat_file)
         cat_file.close()
 

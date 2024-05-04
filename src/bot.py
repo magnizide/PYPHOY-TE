@@ -35,7 +35,7 @@ logger = logging.getLogger(__name__)
 
 CITY, CATEGORY, RESULT = range(3)
 
-CM = scraper.load_categories_map()
+CM = scraper.load_categories_map('assets/categories.json')
 
 rep_cities = scraper.get_cities()
 
