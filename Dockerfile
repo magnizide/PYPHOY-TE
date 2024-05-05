@@ -1,5 +1,5 @@
 # Build for AMD64
-ARG IMAGE_VERSION=3.12-alpine
+ARG IMAGE_VERSION=3.10-alpine
 FROM python:${IMAGE_VERSION}
 
 ARG APP_DIR=/opt/app

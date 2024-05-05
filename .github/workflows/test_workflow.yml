@@ -3,23 +3,23 @@ name: run tests
 on: [push]
 
 jobs:
-    tests:
+    dependencies:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repo
               uses: actions/checkout@v4
-            - name: Setup Python
-              uses: actions/setup-python@v5.1.0
-              with:
-                python-version: 3.10
             - name: Install Chromium
               run: |
                 sudo apt-get update
                 sudo apt-get install chromium
                 # pip install pipenv=='2023.12.1'
-            - name: Pipenv install dependencies
-              uses: VaultVulp/action-pipenv@v2.0.1
+            - name: Setup Python
+              uses: actions/setup-python@v5.1.0
               with:
-                command: install --dev
+                python-version: '3.10'
+                cache: 'pipenv'
+            - name: Install pipenv
+              run: curl https://raw.githubusercontent,com/pypa/pipenv/master/get-pipenv.py | python
+            - run: pipenv install --dev
                 
                 
