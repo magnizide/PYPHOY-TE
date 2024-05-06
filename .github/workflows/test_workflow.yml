@@ -19,7 +19,8 @@ jobs:
                 cache: 'pipenv'
             - name: Install pipenv
               run: curl https://raw.githubusercontent.com/pypa/pipenv/master/get-pipenv.py | python
-            - run: 
+            - run:
+                pipenv update
                 pipenv install --dev
                 pipenv run pytest
                 
