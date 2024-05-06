@@ -5,7 +5,6 @@ on:
     branches:
       - 'releases/**'
 
-
 jobs:
     dependencies:
         runs-on: ubuntu-latest
@@ -18,7 +17,7 @@ jobs:
               id: pysetup
               uses: actions/setup-python@v5.1.0
               with:
-                python-version: '3.10.12'
+                python-version: '3.10'
                 cache: 'pipenv'
             - name: Install pipenv
               run: pip install pipenv==2023.12.1
