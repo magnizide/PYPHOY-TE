@@ -30,6 +30,6 @@ jobs:
                 install -d
             - name: Run tests
               run: pipenv
-                run pytest
+                run pytest --verbosity 2
                 
                 
