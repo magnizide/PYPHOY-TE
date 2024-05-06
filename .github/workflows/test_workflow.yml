@@ -20,7 +20,7 @@ jobs:
             - name: Install pipenv
               run: pip install pipenv==2023.12.1
             - run:
-                pwd && ls -la
+                ls -la
                 pipenv update
                 pipenv install --dev
                 pipenv run pytest
