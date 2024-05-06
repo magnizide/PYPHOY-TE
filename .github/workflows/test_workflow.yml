@@ -18,11 +18,11 @@ jobs:
             - name: Install pipenv
               run: pip install pipenv==2023.12.1
             - name: Install dependencies
-              uses: VaultVulp/action-pipenv@2.0.1
+              uses: VaultVulp/action-pipenv@v2.0.1
               with:
                 command: install -d
             - name: Run tests
-              uses: VaultVulp/action-pipenv@2.0.1
+              uses: VaultVulp/action-pipenv@v2.0.1
               with:
                 command: run pytest --verbosity 2
                 
