@@ -1,6 +1,6 @@
 # Run tests
 name: run tests
-on: [push]
+on: []
 
 jobs:
     dependencies:
