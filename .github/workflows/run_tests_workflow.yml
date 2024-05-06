@@ -1,6 +1,10 @@
 # Run tests
 name: run tests
-on: []
+on:
+  pull_request:
+    branches:
+      - 'releases/**'
+
 
 jobs:
     dependencies:
