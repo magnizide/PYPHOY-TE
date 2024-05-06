@@ -4,4 +4,3 @@ chromedriver*
 **/requirements.txt
 **/__pycache__
 .pytest*
-Makefile
