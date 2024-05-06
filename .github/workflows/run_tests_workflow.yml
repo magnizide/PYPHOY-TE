@@ -3,32 +3,35 @@ name: run tests
 on:
   pull_request:
     branches:
-      - 'releases/**'
+      # Please for any release use branches that meet "release/(major|minor|patch)\-+" regex
+      - 'release/*'
 
 jobs:
-    dependencies:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout repo
-              uses: actions/checkout@v4
-            - name: Install Chromium
-              uses: browser-actions/setup-chrome@v1
-            - name: Setup Python
-              id: pysetup
-              uses: actions/setup-python@v5.1.0
-              with:
-                python-version: '3.10'
-                cache: 'pipenv'
-            - name: Install pipenv
-              run: pip install pipenv==2023.12.1
-            - run:
-                echo $Python_ROOT_DIR
-                $pythonLocation
-            - name: Install dependencies
-              run: pipenv
-                install -d
-            - name: Run tests
-              run: pipenv
-                run pytest --verbosity 2
+  dependencies:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repo
+          uses: actions/checkout@v4
+        - name: Validate branch name
+          run: |
+            if [[ ! ${{ github.head_ref }} =~ "release/(major|minor|patch)\-+" ]]; then
+              echo "::error title=branchNameNotValid::Please use release/(major|minor|patch)\-+ regex for branch naming."
+              exit 1
+            fi
+        - name: Install Chromium
+          uses: browser-actions/setup-chrome@v1
+        - name: Setup Python
+          uses: actions/setup-python@v5.1.0
+          with:
+            python-version: '3.10'
+            cache: 'pipenv'
+        - name: Install pipenv
+          run: pip install pipenv==2023.12.1
+        - name: Install dependencies
+          run: pipenv
+               install -d
+        - name: Run tests
+          run: pipenv
+               run pytest --verbosity 2
                 
                 
