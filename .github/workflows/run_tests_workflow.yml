@@ -6,9 +6,17 @@ on:
       - 'main'
 
 jobs:
-  Tests:
+  tests:
     runs-on: ubuntu-latest
     steps:
+      - name: Validate branch name
+        run: |
+          if [[ ! ${{ github.head_ref }} =~ ^feature/* ]]; then
+            echo "::error title=branchNameNotValid::Please use '^feature/*' regex for branch naming."
+            exit 1
+          else
+            exit 0
+          fi
       - name: Checkout repo
         uses: actions/checkout@v4
       - name: Install Chromium
@@ -26,3 +34,13 @@ jobs:
       - name: Run tests
         run: pipenv
              run pytest --verbosity 2
+
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Docker build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
