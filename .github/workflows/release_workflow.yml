@@ -11,5 +11,5 @@ jobs:
     steps:
     - name: Hello
       run: |
-        echo ${{ github.ref }}
+        echo ${{ github.ref }} ${{ github.head_ref }}
         
