@@ -12,5 +12,6 @@ jobs:
     - name: Hello
       run: |
         echo ${{ github.ref }} ${{ github.head_ref }}
-        echo $GITHUB_EVENT_PATH
+        jq . $GITHUB_EVENT_PATH
+
         
