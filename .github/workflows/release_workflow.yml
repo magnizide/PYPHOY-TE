@@ -1,0 +1,15 @@
+# Docker build tag and push
+name: Release Workflow
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Hello
+      run: |
+        echo ${{ github.ref }}
+        
