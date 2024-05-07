@@ -1,37 +1,48 @@
 # Run tests
-name: run tests
+name: Run tests
 on:
-  pull_request_target:
+  pull_request:
     branches:
-      # Please for any release use branches that meet "release/(major|minor|patch)\-+" regex
       - 'main'
 
 jobs:
-  dependencies:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout repo
-          uses: actions/checkout@v4
-        - name: Validate branch name
-          run: |
-            if [[ ! ${{ github.head_ref }} =~ release/(major|minor|patch)-+ ]]; then
-              echo "::error title=branchNameNotValid::Please use release/(major|minor|patch)\-+ regex for branch naming."
-              exit 1
-            else
-              exit 0
-            fi
-        - name: Install Chromium
-          uses: browser-actions/setup-chrome@v1
-        - name: Setup Python            
-          uses: actions/setup-python@v5.1.0
-          with:
-            python-version: '3.10'
-            cache: 'pipenv'
-        - name: Install pipenv
-          run: pip install pipenv==2023.12.1
-        - name: Install dependencies
-          run: pipenv
-               install -d
-        - name: Run tests
-          run: pipenv
-               run pytest --verbosity 2
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate branch name
+        run: |
+          if [[ ! ${{ github.head_ref }} =~ ^feature/* ]]; then
+            echo "::error title=branchNameNotValid::Please use '^feature/*' regex for branch naming."
+            exit 1
+          else
+            exit 0
+          fi
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Install Chromium
+        uses: browser-actions/setup-chrome@v1
+      - name: Setup Python            
+        uses: actions/setup-python@v5.1.0
+        with:
+          python-version: '3.10'
+          cache: 'pipenv'
+      - name: Install pipenv
+        run: pip install pipenv==2023.12.1
+      - name: Install py dependencies
+        run: pipenv
+             install -d
+      - name: Run tests
+        run: pipenv
+             run pytest --verbosity 2
+
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Docker build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
