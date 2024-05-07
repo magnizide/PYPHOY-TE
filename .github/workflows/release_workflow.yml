@@ -36,7 +36,7 @@ jobs:
     steps:
       - name:
         run: |
-          echo ${{ needs.bump-version.outputs.new_ver }} $new_ver
+          echo $(grep 'current_version =' .bumpversion.cfg | cut -d ' ' -f3)
       # - name: Context
       #   uses: actions/checkout@v4
       # - name: Set up Docker Buildx
