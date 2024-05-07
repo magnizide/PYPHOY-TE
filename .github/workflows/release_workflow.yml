@@ -30,7 +30,7 @@ jobs:
       #     branch: ${{ github.ref }}
 
   docker-push:
-    if: ! contains( github.event.head_commit.message, 'Bump version')
+    if: "! contains( github.event.head_commit.message, 'Bump version')"
     runs-on: ubuntu-latest
     needs: bump-version
     steps:
