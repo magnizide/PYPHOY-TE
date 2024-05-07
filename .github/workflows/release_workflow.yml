@@ -1,15 +1,18 @@
 # Docker build tag and push
-name: Release Workflow
+name: Release
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
       - 'main'
 
 jobs:
   build:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-    - name: Hello
+    - name: Docker build
       run: |
         echo ${{ github.ref }} ${{ github.head_ref }}
         jq . $GITHUB_EVENT_PATH
