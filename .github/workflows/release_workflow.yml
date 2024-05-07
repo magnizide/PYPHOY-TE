@@ -36,7 +36,7 @@ jobs:
     steps:
       - name:
         run: |
-          echo ${{ needs.bump-version.outputs }}
+          echo ${{ toJson(needs.bump-version.outputs) }}
       # - name: Context
       #   uses: actions/checkout@v4
       # - name: Set up Docker Buildx
