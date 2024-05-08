@@ -29,8 +29,8 @@ jobs:
       - name: Install b2v and extract new version
         id: b2v
         run: |
-          git config --global user.email "${{ github.actor.email }}"
-          git config --global user.name "${{ github.actor.name }}"
+          git config --global user.email "${{ github.event.pusher.email }}"
+          git config --global user.name "${{ github.event.pusher.name }}"
           pip install bump2version
           echo OLD_VERSION=$(bump2version --dry-run --list major | grep 'current_version' | sed -r s,"^.*=",,) >> "$GITHUB_OUTPUT"
           echo NEW_VERSION=$(bump2version --dry-run --list major | grep 'new_version' | sed -r s,"^.*=",,) >> "$GITHUB_OUTPUT"
