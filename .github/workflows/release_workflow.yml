@@ -32,6 +32,7 @@ jobs:
       - name: Get current version
         id: gcv
         run: |
+          git tag -l
           echo NEW_TAG=$(grep "current_version =" .bumpversion.cfg | cut -d " " -f3) >> "$GITHUB_OUTPUT"
 
   docker-push:
