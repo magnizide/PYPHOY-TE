@@ -12,28 +12,34 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     outputs:
-      new_tag: ${{ steps.gcv.outputs.NEW_TAG }}
+      new_version: ${{ steps.b2v.outputs.NEW_VERSION }}
+      old_version: ${{ steps.b2v.outputs.OLD_VERSION }}
+      new_tag: ${{ steps.b2v.outputs.NEW_TAG}}
     steps:
       - name: Context
         uses: actions/checkout@v4
         with:
           persist-credentials: false
           fetch-depth: 0
-      - name: Bump version and tag
-        uses: jaumann/github-bumpversion-action@v0.0.7
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-          DAFAULT_BUMP: major
+      - name: Setup Python            
+        uses: actions/setup-python@v5.1.0
+        with:
+          python-version: '3.10'
+          cache: 'pipenv'
+      - name: Install b2v and extract new version
+        id: b2v
+        run: |
+          pip install bump2version
+          echo OLD_VERSION=$(bump2version --dry-run --list major | grep 'current_version' | sed -r s,"^.*=",,) >> "$GITHUB_OUTPUT"
+          echo NEW_VERSION=$(bump2version --dry-run --list major | grep 'new_version' | sed -r s,"^.*=",,) >> "$GITHUB_OUTPUT"
+          bump2version --config-file .bumpversion.cfg major
+          echo NEW_TAG=$(git tag --sort=taggerdate) >> "$GITHUB_OUTPUT"
       # - name: Push changes
       #   uses: ad-m/github-push-action@master
       #   with:
       #     github_token: ${{ secrets.GH_PAT }}
       #     branch: ${{ github.ref }}
-      - name: Get current version
-        id: gcv
-        run: |
-          git tag -l
-          echo NEW_TAG=$(grep "current_version =" .bumpversion.cfg | cut -d " " -f3) >> "$GITHUB_OUTPUT"
+
 
   docker-push:
     if: "! contains( github.event.head_commit.message, 'Bump version')"
@@ -42,8 +48,10 @@ jobs:
     steps:
       - env:
           NEW_TAG: ${{ needs.bump-version.outputs.new_tag }}
+          NEW_VER: ${{ needs.bump-version.outputs.new_version }}
+          OLD_VER: ${{ needs.bump-version.outputs.old_version }}
         run: |
-          echo $NEW_TAG
+          echo $NEW_TAG $NEW_VER $OLD_VER
       # - name: Context
       #   uses: actions/checkout@v4
       # - name: Set up Docker Buildx
