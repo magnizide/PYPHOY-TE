@@ -19,7 +19,7 @@ jobs:
         id: 'applierAuth'
         uses: 'google-github-actions/auth@v2'
         with:
-          workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_NUM }}/locations/global/workloadIdentityPools/github'
+          workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_NUM }}/locations/global/workloadIdentityPools/github/attribute.repository_id/${{ github.repository_id }}'
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
       
       - uses: hashicorp/setup-terraform@v3
