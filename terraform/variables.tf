@@ -6,13 +6,13 @@ variable "region" {
 
 variable "project" {
   description = "Project to which connect in GCP"
-  type    = string
+  type        = string
 }
 
 variable "zone" {
-  default = "us-east1-a"
+  default     = "us-east1-a"
   description = "Zone to which connect in GCP"
-  type    = string
+  type        = string
 }
 
 variable "app_name" {
