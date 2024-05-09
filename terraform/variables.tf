@@ -5,7 +5,13 @@ variable "region" {
 }
 
 variable "project" {
-  default = "Project to which connect in GCP"
+  description = "Project to which connect in GCP"
+  type    = string
+}
+
+variable "zone" {
+  default = "us-east1-a"
+  description = "Zone to which connect in GCP"
   type    = string
 }
 
