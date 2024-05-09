@@ -34,7 +34,7 @@ jobs:
       - name: Terraform init
         id: init
         working-directory: terraform
-        run: terraform init -no-color -input=false -backend-config="prefix=pyphot-te" --backend-config="${{ secrets.GCP_BUCKET_TF_STATE }}"
+        run: terraform init -no-color -input=false -backend-config="prefix=pyphoy-te" --backend-config="bucket=${{ secrets.GCP_BUCKET_TF_STATE }}"
       
       - name: Terraform validate
         id: validate
