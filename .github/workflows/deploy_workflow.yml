@@ -46,10 +46,10 @@ jobs:
         working-directory: terraform
         run: terraform plan -input=false -var 'tg_bot_token=${{ secrets.TG_BOT_TOKEN }}' -var 'project=${{ secrets.GCP_PROJECT_NAME }}'
 
-      # - name: Terraform apply
-      #   id: apply
-      #   working-directory: terraform
-      #   run: terraform apply -input=false --auto-approve -var 'tg_bot_token=${{ secrets.TG_BOT_TOKEN }}' -var 'project=${{ secrets.GCP_PROJECT_NAME }}'
+      - name: Terraform apply
+        id: apply
+        working-directory: terraform
+        run: terraform apply -input=false --auto-approve -var 'tg_bot_token=${{ secrets.TG_BOT_TOKEN }}' -var 'project=${{ secrets.GCP_PROJECT_NAME }}'
 
       
 
