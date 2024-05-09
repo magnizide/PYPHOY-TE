@@ -1,0 +1,55 @@
+# GCP vm instance deploy
+name: Deploy
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  deploy:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Context"
+        uses: actions/checkout@v3
+
+      - name: Google auth
+        id: 'applierAuth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: 'projects/${{ secrets.GCP_PROJECT_NUM }}/locations/global/workloadIdentityPools/github'
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+      
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: '1.8.3'
+      
+      - name: Terraform format
+        id: fmt
+        working-directory: terraform
+        run: terraform fmt -recursive -check
+      
+      - name: Terraform init
+        id: init
+        working-directory: terraform
+        run: terraform init -no-color -input=false -backend-config="prefix=pyphot-te" --backend-config="${{ secrets.GCP_BUCKET_TF_STATE }}"
+      
+      - name: Terraform validate
+        id: validate
+        working-directory: terraform
+        run: terraform validate -no-color
+      
+      - name: Terraform plan
+        id: plan
+        working-directory: terraform
+        run: terraform plan -input=false -var 'tg_bot_token=${{ secrets.TG_BOT_TOKEN }}' -var 'project=${{ secrets.GCP_PROJECT_NAME }}'
+
+      # - name: Terraform apply
+      #   id: apply
+      #   working-directory: terraform
+      #   run: terraform apply -input=false --auto-approve -var 'tg_bot_token=${{ secrets.TG_BOT_TOKEN }}' -var 'project=${{ secrets.GCP_PROJECT_NAME }}'
+
+      
+
