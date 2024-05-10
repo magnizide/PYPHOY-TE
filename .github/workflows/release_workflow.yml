@@ -34,7 +34,7 @@ jobs:
           echo OLD_VERSION=$(bump2version --dry-run --list major | grep 'current_version' | sed -r s,"^.*=",,) >> "$GITHUB_OUTPUT"
           echo NEW_VERSION=$(bump2version --dry-run --list major | grep 'new_version' | sed -r s,"^.*=",,) >> "$GITHUB_OUTPUT"
           bump2version --config-file .bumpversion.cfg major
-          echo NEW_TAG=$(git tag --sort=taggerdate) >> "$GITHUB_OUTPUT"
+          echo NEW_TAG=$(git tag --sort=taggerdate | tail -1) >> "$GITHUB_OUTPUT"
       - name: Docker login
         uses: docker/login-action@v3
         with:
