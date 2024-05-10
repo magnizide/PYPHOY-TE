@@ -2,6 +2,8 @@ module "gce-container" {
   source  = "terraform-google-modules/container-vm/google"
   version = "~> 3.0"
 
+  cos_image_family = "stable"
+
   container = {
     image = var.pyphoy_container_image
     env = [
@@ -21,6 +23,7 @@ resource "google_compute_instance" "instance" {
 
   network_interface {
     network = "default"
+    access_config {}
   }
 
   boot_disk {
