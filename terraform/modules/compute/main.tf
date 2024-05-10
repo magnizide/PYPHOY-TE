@@ -30,12 +30,19 @@ resource "google_compute_instance" "instance" {
   }
 
   metadata = {
-    gce-container-declarations = module.gce-container.metadata_value
-    google-logging-enabled     = "true"
-    google-monitoring-enabled  = "true"
+    gce-container-declaration = module.gce-container.metadata_value
+    google-logging-enabled    = "true"
+    google-monitoring-enabled = "true"
   }
 
   labels = {
     container-vm = module.gce-container.vm_container_label
+  }
+
+  service_account {
+    email = "magni-bot@magniops-dev.iam.gserviceaccount.com"
+    scopes = [
+      "https://www.googleapis.com/auth/cloud-platform",
+    ]
   }
 }
