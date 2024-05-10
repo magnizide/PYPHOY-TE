@@ -128,7 +128,7 @@ def request_pyp_page(pyp_url:str) -> BeautifulSoup:
     try:
         req = requests.get(pyp_url).content
     except requests.exceptions.ConnectionError as e:
-        logging.fatal(f'{e}')
+        logging.fatal(f"{e}")
         sys.exit()
     
     pyp_page = BeautifulSoup(req, 'html.parser')
