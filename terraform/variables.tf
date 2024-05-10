@@ -22,7 +22,13 @@ variable "app_name" {
 }
 
 variable "pyphoy_container_image" {
-  default     = "magnizide/pyphoy-te:latest"
+  default     = "magnizide/pyphoy-te"
+  description = "Image path for pulling in vm metadata."
+  type        = string
+}
+
+variable "pyphoy_container_tag" {
+  default     = "latest"
   description = "Image path for pulling in vm metadata."
   type        = string
 }

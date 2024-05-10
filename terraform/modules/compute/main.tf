@@ -5,7 +5,7 @@ module "gce-container" {
   cos_image_family = "stable"
 
   container = {
-    image = var.pyphoy_container_image
+    image = "${var.pyphoy_container_image}:${var.pyphoy_container_tag}"
     env = [
       {
         name  = "TG_BOT_TOKEN"
@@ -18,7 +18,7 @@ module "gce-container" {
 }
 
 resource "google_compute_instance" "instance" {
-  name         = var.app_name
+  name         = "${var.app_name}-${var.pyphoy_container_tag}"
   machine_type = "e2-micro"
 
   network_interface {
